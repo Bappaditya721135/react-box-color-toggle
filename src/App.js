@@ -1,23 +1,54 @@
-import logo from './logo.svg';
 import './App.css';
+import boxArr from './data/boxes';
+import React from 'react';
+import Box from './components/Box';
 
 function App() {
+  const [boxes, setBoxes] = React.useState(boxArr);
+
+
+  function toggle(id) {
+
+    // onl school methood 
+
+    // console.log(`${id} cliced`)
+    // setBoxes(prevBoxes => {
+    //   const arr = [];
+    //   for(let i=0; i<prevBoxes.length; i++) {
+    //     if(prevBoxes[i].id === id) {
+    //       const newObj = {
+    //         ...prevBoxes[i],
+    //         on: !prevBoxes[i].on,
+    //       }
+    //       arr.push(newObj);
+    //     }
+    //     else {
+    //       const newObj = {
+    //         ...prevBoxes[i],
+    //       }
+    //       arr.push(newObj)
+    //     }
+    //   }
+    //   return arr;
+    // })
+
+    // new methood 
+
+    setBoxes(prevBoxes => {
+      return prevBoxes.map(box => box.id === id ? {...box,on: !box.on} : {...box})
+    })
+  }
+  const newArr = boxes.map(box => {
+    return <Box key={box.id}
+                id={box.id}
+                content={box.content}
+                on={box.on}
+                toggle={toggle}
+                  />
+  })
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        {newArr}
     </div>
   );
 }
